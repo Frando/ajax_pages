@@ -113,7 +113,7 @@ function ajax_pages_settings_form($form, &$form_state) {
     '#title' => t('Page wrapper selector'),
     '#default_value' => variable_get('ajax_pages_wrapper_selector', '#page-wrapper'),
     '#size' => 60,
-    '#description' => t('A jQuery selector that specifies the wrapper element of your page. You can find this element in your theme\'s html.tpl.php file – it\'s the one that surrounds the statement <code>@template_code</code>.<br />Example: <code>@example</code>', array('@template_code' => 'print $page', '@example' => '#page-wrapper')),
+    '#description' => t('A jQuery selector that specifies the wrapper element of your page. You add this element in your theme\'s html.tpl.php file so that it wraps the output of the <code>page_top</code>, <code>page</code> and <code>page_bottom</code> regions.<br />Example: <code>@example</code>', array('@example' => '#page-wrapper')),
     '#required' => TRUE,
   );
   $form['ajax_pages_links_selector'] = array(
@@ -172,7 +172,6 @@ function ajax_pages_drupal_goto_alter(&$path, &$options, &$http_response_code) {
  * Implements hook_page_delivery_callback_alter().
  */
 function ajax_pages_page_delivery_callback_alter(&$callback) {
-  // We detect Ajax page requests by the ajax_pages POST parameter.
   // When serving Ajax page requests, deliver just the main page
   // without the html.tpl.php wrapper.
   if (ajax_pages_is_ajax_pages_request() && $callback == 'drupal_deliver_html_page') {
@@ -266,8 +265,9 @@ function ajax_pages_deliver_page($page_callback_result) {
 
     ajax_deliver($page);
 
-    // Make sure the requests are cached. pajax requests will be cached separately 
-    // from standard page requests thanks to the "_ajax_pages=1" query string.
+    // Make sure the requests are cached. Ajax pages requests will be cached
+    // separately from standard page requests thanks to the "_ajax_pages=1"
+    // parameter.
     //drupal_page_footer();
   }
 }
@@ -331,7 +331,7 @@ function ajax_pages_ajax_command_synchronize_state($url) {
 }
 
 /**
- * Ajax command to set the page title.
+ * Ajax command to load extra CSS/JS files.
  *
  * @return
  *   An array suitable for use with the ajax_render() function.
@@ -399,7 +399,6 @@ function ajax_pages_ajax_command_page_html($selector, $html, $settings = NULL) {
  * by ajax_pages_deliver_page().
  */
 function ajax_pages_process_html(&$variables) {
-  //dpm($variables);
   if (ajax_pages_is_ajax_pages_request()) {
     _ajax_pages_html_variables($variables);
   }

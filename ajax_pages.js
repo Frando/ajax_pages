@@ -1,11 +1,12 @@
 (function($) {
 
 /**
- * Handles click events on selected links and loads the corresponding pages 
- * through Ajax.
+ * Handles click events on selected links as well as form submits and loads
+ * the corresponding pages through Ajax.
  */
 Drupal.behaviors.ajaxPages = {
   attach: function (context, settings) {
+    // HTML5 window.history only.
     if (!(window.history && window.history.pushState)) {
       return;
     }
@@ -83,7 +84,7 @@ Drupal.behaviors.ajaxPages = {
   }
 }
 
-// Override parameters for Ajax pages requests.
+// Override parameters for Ajax pages requests to make them via GET.
 Drupal.ajaxBeforeSerialize = Drupal.ajax.prototype.beforeSerialize;
 Drupal.ajax.prototype.beforeSerialize = function(element, options) {
   if (options.data._ajax_pages) {
