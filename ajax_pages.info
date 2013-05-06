@@ -1,0 +1,4 @@
+name = "Ajax pages"
+description = "Enables full website page loads (page.tpl.php) with Ajax."
+core = "7.x"
+configure = "admin/config/user-interface/ajax-pages"
