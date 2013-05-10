@@ -241,7 +241,7 @@ function ajax_pages_deliver_page($page_callback_result) {
   }
 }
 
-/*
+/**
  * Returns the list of CSS and JS files to be loaded with the page.
  */
 function ajax_pages_get_files() {
@@ -270,7 +270,7 @@ function ajax_pages_get_files() {
   return $items;
 }
 
-/*
+/**
  * Implementes hook_ajax_render_alter().
  */
 function ajax_pages_ajax_render_alter(&$commands) {
@@ -288,7 +288,7 @@ function ajax_pages_ajax_render_alter(&$commands) {
 /**
  * Ajax command to synchronize the current browser state (URL) for the page.
  *
- * @return
+ * @return array
  *   An array suitable for use with the ajax_render() function.
  */
 function ajax_pages_ajax_command_synchronize_state($url) {
@@ -301,7 +301,7 @@ function ajax_pages_ajax_command_synchronize_state($url) {
 /**
  * Ajax command to load extra CSS/JS files.
  *
- * @return
+ * @return array
  *   An array suitable for use with the ajax_render() function.
  */
 function ajax_pages_ajax_command_load_files($type, $files, $scope = '') {
@@ -316,7 +316,7 @@ function ajax_pages_ajax_command_load_files($type, $files, $scope = '') {
 /**
  * Ajax command to set the page title.
  *
- * @return
+ * @return array
  *   An array suitable for use with the ajax_render() function.
  */
 function ajax_pages_ajax_command_set_title($title) {
@@ -329,7 +329,7 @@ function ajax_pages_ajax_command_set_title($title) {
 /**
  * Ajax command to set element attributes.
  *
- * @return
+ * @return array
  *   An array suitable for use with the ajax_render() function.
  */
 function ajax_pages_ajax_command_attributes($selector, array $attributes = array(), array $preserve_classes = array()) {
@@ -348,7 +348,7 @@ function ajax_pages_ajax_command_attributes($selector, array $attributes = array
 /**
  * Ajax command to set the page content HTML.
  *
- * @return
+ * @return array
  *   An array suitable for use with the ajax_render() function.
  */
 function ajax_pages_ajax_command_page_html($selector, $html, $settings = NULL) {
@@ -385,7 +385,7 @@ function _ajax_pages_html_variables($variables = NULL) {
   return $stored_variables;
 }
 
-/*
+/**
  * Removes querystring variable from the URL.
  */
 function _ajax_pages_remove_querystring_var($url, $varname) {
