@@ -271,7 +271,7 @@ function ajax_pages_get_files() {
 }
 
 /**
- * Implementes hook_ajax_render_alter().
+ * Implements hook_ajax_render_alter().
  */
 function ajax_pages_ajax_render_alter(&$commands) {
   if (ajax_pages_is_ajax_pages_request()) {
