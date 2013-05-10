@@ -41,7 +41,7 @@ Drupal.behaviors.ajaxPages = {
           loadPage(document.location.href);
         }
       };
-      
+
       $(document).delegate(settings.ajaxPages.linksSelector, 'click', function(e) {
         if ((this.href.indexOf('#') == -1 || document.location.href.split('#')[0] != this.href.split('#')[0]) &&
           Drupal.ajaxPages.isInternalNonAdminLink(this.href)) {
@@ -49,14 +49,14 @@ Drupal.behaviors.ajaxPages = {
           Drupal.ajaxPages.refreshed = false;
           history.pushState(null, $(this).attr('title'), this.href);
           loadPage(this.href);
-          
+
           // Stop event propagation and prevent the default action.
           e.preventDefault();
           e.stopPropagation();
         }
       });
     }
-    
+
     // This class means to submit the form to the action using Ajax.
     $('.form-submit:not(.ajax-processed, .ctools-use-ajax)').addClass('ajax-processed').each(function () {
       if (Drupal.ajaxPages.isInternalNonAdminLink(this.form.action)) {
@@ -213,7 +213,7 @@ Drupal.ajax.prototype.commands.ajaxPagesAttributes = function(ajax, response, st
       $element.removeAttr(name);
     });
   });
-  
+
   // Add attributes passed to the command.
   $.each(response.attributes, function(name, attribute) {
     $elements.attr(name, attribute);
