@@ -95,7 +95,7 @@ function ajax_pages_menu() {
     'description' => 'Configuration for setting up Ajax page loads.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ajax_pages_settings_form'),
-    'access arguments' => array('access administration pages'),
+    'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
   );
 
