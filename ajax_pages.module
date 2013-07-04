@@ -75,7 +75,6 @@ function ajax_pages_init() {
   if (isset($_REQUEST['_ajax_pages'])) {
     ajax_pages_is_ajax_pages_request(TRUE);
     unset($_GET['_ajax_pages']);
-    unset($_POST['_ajax_pages']);
     unset($_REQUEST['_ajax_pages']);
   }
   else {
