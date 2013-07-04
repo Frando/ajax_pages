@@ -137,7 +137,7 @@ function ajax_pages_settings_form($form, &$form_state) {
  * Sets the flag for whether this page request is an Ajax pages one.
  */
 function ajax_pages_is_ajax_pages_request($ajax_pages = NULL) {
-  $is_ajax_pages_request = &drupal_static(__FUNCTION__, array());
+  $is_ajax_pages_request = &drupal_static(__FUNCTION__, FALSE);
 
   if (isset($ajax_pages)) {
     $is_ajax_pages_request = $ajax_pages;
