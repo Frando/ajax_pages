@@ -147,6 +147,20 @@ function ajax_pages_is_ajax_pages_request($ajax_pages = NULL) {
 }
 
 /**
+ * Implements hook_form_alter().
+ */
+function ajax_pages_form_alter(&$form, &$form_state, $form_id) {
+  // By default, form #action is set to request_uri(), which is carrying the
+  // _ajax_pages parameter in an Ajax pages request. Stripping the parameter
+  // from request_uri() via altering $_SERVER['REQUEST_URI'] in
+  // ajax_pages_init() is not good because it brings up various side effects,
+  // so we're just doing it locally in a hook_form_alter() implementation.
+  if (ajax_pages_is_ajax_pages_request() && $form['#action'] == request_uri()) {
+    $form['#action'] = _ajax_pages_remove_querystring_var($form['#action'], '_ajax_pages');
+  }
+}
+
+/**
  * Implements hook_drupal_goto_alter().
  */
 function ajax_pages_drupal_goto_alter(&$path, &$options, &$http_response_code) {
