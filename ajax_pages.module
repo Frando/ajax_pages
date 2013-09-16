@@ -49,15 +49,20 @@ function ajax_pages_init() {
     }
     drupal_add_js(array('ajaxPages' => array('paths' => $paths)), 'setting');
     $path_prefixes = array();
-    if (module_exists('locale') && variable_get('locale_language_negotiation_url_part', LOCALE_LANGUAGE_NEGOTIATION_URL_PREFIX) == LOCALE_LANGUAGE_NEGOTIATION_URL_PREFIX) {
-      // Get languages grouped by status and select only the enabled ones.
-      $languages = language_list('enabled');
-      $languages = $languages[1];
+    if (module_exists('locale')) {
+      // locale_init() hasn't run by now so include locale.inc manually to get
+      // the LOCALE_LANGUAGE_NEGOTIATION_URL_PREFIX constant.
+      include_once DRUPAL_ROOT . '/includes/locale.inc';
+      if (variable_get('locale_language_negotiation_url_part', LOCALE_LANGUAGE_NEGOTIATION_URL_PREFIX) == LOCALE_LANGUAGE_NEGOTIATION_URL_PREFIX) {
+        // Get languages grouped by status and select only the enabled ones.
+        $languages = language_list('enabled');
+        $languages = $languages[1];
 
-      $path_prefixes = array();
-      foreach ($languages as $language) {
-        if ($language->prefix) {
-          $path_prefixes[] = $language->prefix;
+        $path_prefixes = array();
+        foreach ($languages as $language) {
+          if ($language->prefix) {
+            $path_prefixes[] = $language->prefix;
+          }
         }
       }
     }
