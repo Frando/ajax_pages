@@ -131,7 +131,11 @@ function ajax_pages_settings_form($form, &$form_state) {
     '#type' => 'textarea',
     '#title' => t('Suppress Ajax page loading on specific pages'),
     '#default_value' => variable_get('ajax_pages_suppress_paths', ''),
-    '#description' => t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>')),
+    '#description' => t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array(
+      '%blog' => 'blog',
+      '%blog-wildcard' => 'blog/*',
+      '%front' => '<front>',
+    )),
     '#required' => FALSE,
   );
 
@@ -238,7 +242,7 @@ function ajax_pages_deliver_page($page_callback_result) {
     $output[] = ajax_pages_ajax_command_load_files('js', $js_footer_files, 'footer');
 
     // Retrieve the variables.
-    $html_variables = _ajax_pages_html_variables();
+    $html_variables = (array) _ajax_pages_html_variables();
 
     $attributes = $html_variables['attributes_array'];
     $attributes['class'] = $html_variables['classes_array'];
@@ -268,11 +272,11 @@ function ajax_pages_get_files() {
     $items[$type] = $function();
     drupal_alter($type, $items[$type]);
     // @todo Inline CSS and JS items are indexed numerically. These can't be
-    //   reliably diffed with array_diff_key(), since the number can change
-    //   due to factors unrelated to the inline content, so for now, we strip
-    //   the inline items from Ajax responses, and can add support for them
-    //   when drupal_add_css() and drupal_add_js() are changed to using md5()
-    //   or some other hash of the inline content.
+    // reliably diffed with array_diff_key(), since the number can change
+    // due to factors unrelated to the inline content, so for now, we strip
+    // the inline items from Ajax responses, and can add support for them
+    // when drupal_add_css() and drupal_add_js() are changed to using md5()
+    // or some other hash of the inline content.
     foreach ($items[$type] as $key => $item) {
       if (is_numeric($key)) {
         unset($items[$type][$key]);
@@ -352,9 +356,10 @@ function ajax_pages_ajax_command_set_title($title) {
  */
 function ajax_pages_ajax_command_attributes($selector, array $attributes = array(), array $preserve_classes = array()) {
   // @see drupal_attributes()
-  foreach ($attributes as $attribute => &$data) {
+  foreach ($attributes as &$data) {
     $data = implode(' ', (array) $data);
   }
+
   return array(
     'command' => 'ajaxPagesAttributes',
     'selector' => $selector,
@@ -411,5 +416,6 @@ function _ajax_pages_remove_querystring_var($url, $varname) {
   parse_str($qspart, $qsvars);
   unset($qsvars[$varname]);
   $newqs = http_build_query($qsvars);
+
   return $urlpart . (!empty($newqs) ? '?' . $newqs : '');
 }
